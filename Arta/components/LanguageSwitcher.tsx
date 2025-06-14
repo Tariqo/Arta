@@ -1,7 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Text } from './Themed';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../constants/Colors';
 
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
@@ -12,7 +12,7 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <TouchableOpacity style={styles.button} onPress={toggleLanguage}>
+    <TouchableOpacity style={styles.container} onPress={toggleLanguage}>
       <Text style={styles.text}>
         {i18n.language === 'ar' ? 'English' : 'عربي'}
       </Text>
@@ -21,10 +21,10 @@ export default function LanguageSwitcher() {
 }
 
 const styles = StyleSheet.create({
-  button: {
+  container: {
+    backgroundColor: COLORS.pageBackground,
     padding: 8,
-    borderRadius: 4,
-    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
   },
   text: {
     fontSize: 14,

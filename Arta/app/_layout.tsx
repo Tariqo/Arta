@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
+import Colors from '../constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 
 export {
@@ -49,11 +50,47 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
+  const MyDefaultTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: Colors.light.primary,
+      background: Colors.light.background,
+      card: Colors.light.card,
+      text: Colors.light.text,
+      border: Colors.light.divider,
+      notification: Colors.light.danger,
+      // Add other colors as needed, mapping them from your COLORS object
+    },
+  };
+
+  const MyDarkTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      primary: Colors.dark.primary,
+      background: Colors.dark.background,
+      card: Colors.dark.card,
+      text: Colors.dark.text,
+      border: Colors.dark.divider,
+      notification: Colors.dark.danger,
+      // Add other colors as needed, mapping them from your COLORS object
+    },
+  };
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === 'dark' ? MyDarkTheme : MyDefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen
+          name="modal"
+          options={{
+            presentation: 'modal',
+            headerStyle: { backgroundColor: colorScheme === 'dark' ? Colors.dark.surface : Colors.light.surface },
+            headerTintColor: colorScheme === 'dark' ? Colors.dark.mainText : Colors.light.mainText,
+            headerTitleStyle: { fontWeight: 'bold' },
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

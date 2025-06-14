@@ -3,7 +3,9 @@
     "home": "Home",
     "explore": "Explore",
     "create": "Add Listing",
-    "profile": "Profile"
+    "profile": "Profile",
+    "forYou": "For You",
+    "categories": "Categories"
   },
   "categories": {
     "cars": "Cars",
@@ -19,7 +21,18 @@
   },
   "create": {
     "title": "Add New Listing",
-    "subtitle": "Add your new listing here"
+    "uploadPhotos": "Upload photos",
+    "photoTip": "Catch your buyers' eye — use quality photos.",
+    "learnHow": "Learn how",
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. White COS Jumper",
+    "descLabel": "Describe your item",
+    "descPlaceholder": "e.g. only worn a few times, true to size",
+    "category": "Category",
+    "price": "Price",
+    "uploadFeedback": "What do you think of our upload process?",
+    "giveFeedback": "Give feedback",
+    "upload": "Upload"
   },
   "profile": {
     "title": "My Account",
@@ -28,4 +41,4 @@
   "explore": {
     "title": "Categories"
   }
-} 
+}

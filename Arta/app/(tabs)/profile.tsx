@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
+import { useTranslation } from 'react-i18next';
+import { COLORS } from '../../constants/Colors';
 
 export default function ProfileScreen() {
   return (
@@ -31,5 +33,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+    backgroundColor: COLORS.lightText + '30',
+  },
+  text: {
+    color: COLORS.lightText,
   },
 }); 

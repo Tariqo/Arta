@@ -3,6 +3,7 @@
     "@types/i18next": "^12.1.0"
   },
   "dependencies": {
+    "firebase": "^11.9.1",
     "i18next": "^25.2.1",
     "react-i18next": "^15.5.3"
   }

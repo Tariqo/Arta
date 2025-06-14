@@ -6,21 +6,17 @@ import {
 import { Text, View } from '@/components/Themed';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-
-const COLORS = {
-  primary: '#2a9d8f',
-  secondary: '#e76f51',
-  background: '#f1f1f1',
-  accent: '#264653',
-  text: '#1d1d1d',
-  lightText: '#6c757d',
-  white: '#ffffff',
-  redBackground: '#c0392b',
-  redActive: '#e74c3c',
-};
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../../constants/Colors';
 
 const tabs = ['For Me', 'Categories'];
-const categories = ['سيارات', 'إلكترونيات', 'ملابس', 'أثاث'];
+const categories = [
+  { id: 'cars', icon: 'car' },
+  { id: 'electronics', icon: 'mobile' },
+  { id: 'clothes', icon: 'shopping-bag' },
+  { id: 'furniture', icon: 'bed' },
+];
 
 const listings = [
   {
@@ -43,7 +39,7 @@ const listings = [
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState('For Me');
 
   return (
@@ -89,7 +85,7 @@ export default function HomeScreen() {
               styles.tabText,
               activeTab === tab && styles.activeTabText,
             ]}>
-              {tab}
+              {tab === 'For Me' ? t('tabs.forYou') : t('tabs.categories')}
             </Text>
           </TouchableOpacity>
         ))}
@@ -103,9 +99,10 @@ export default function HomeScreen() {
           <View style={styles.categories}>
             {categories.map((cat) => (
               <CategoryButton 
-                key={cat} 
-                label={cat} 
-                onPress={() => router.push(`/explore?category=${encodeURIComponent(cat)}`)} 
+                key={cat.id} 
+                label={t(`categories.${cat.id}`)}
+                icon={cat.icon}
+                onPress={() => router.push(`/explore?category=${encodeURIComponent(cat.id)}`)} 
               />
             ))}
           </View>
@@ -115,9 +112,10 @@ export default function HomeScreen() {
   );
 }
 
-function CategoryButton({ label, onPress }: { label: string; onPress: () => void }) {
+function CategoryButton({ label, icon, onPress }: { label: string; icon: string; onPress: () => void }) {
   return (
     <TouchableOpacity style={styles.categoryBtn} onPress={onPress}>
+      <FontAwesome name={icon as any} size={24} color={COLORS.white} style={styles.categoryIcon} />
       <Text style={styles.categoryText}>{label}</Text>
     </TouchableOpacity>
   );
@@ -140,15 +138,15 @@ function ListingCard({ title, time, user, location, image }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.pageBackground,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     padding: 15,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.surface,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: COLORS.divider,
   },
   langSegmentedControl: {
     flexDirection: 'row',
@@ -179,9 +177,9 @@ const styles = StyleSheet.create({
   topBar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.surface,
     paddingVertical: 10,
-    borderBottomColor: '#ddd',
+    borderBottomColor: COLORS.divider,
     borderBottomWidth: 1,
   },
   tabButton: {
@@ -193,7 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   tabText: {
-    color: COLORS.text,
+    color: COLORS.mainText,
     fontWeight: 'bold',
   },
   activeTabText: {
@@ -214,6 +212,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     margin: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  categoryIcon: {
+    marginRight: 8,
   },
   categoryText: {
     color: COLORS.white,
@@ -221,7 +225,7 @@ const styles = StyleSheet.create({
   },
   card: {
     flexDirection: 'row',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     marginBottom: 15,
     padding: 10,
     borderRadius: 10,
@@ -240,6 +244,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: COLORS.mainText,
   },
   cardMeta: {
     color: COLORS.lightText,
@@ -249,5 +254,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: COLORS.primary,
     fontWeight: 'bold',
+  },
+  separator: {
+    height: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.lightText + '30',
   },
 });

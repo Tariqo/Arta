@@ -1,4 +1,6 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
+import { Stack } from 'expo-router';
+import { COLORS } from '../constants/Colors';
 
 // This file is web-only and used to configure the root HTML for every
 // web page during static rendering.
@@ -36,3 +38,19 @@ body {
     background-color: #000;
   }
 }`;
+
+export function RootLayout() {
+  return (
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: COLORS.accent,
+        },
+        headerTintColor: COLORS.white,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    />
+  );
+}

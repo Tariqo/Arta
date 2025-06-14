@@ -3,7 +3,9 @@
     "home": "الرئيسية",
     "explore": "إكتشف",
     "create": "إضافة إعلان",
-    "profile": "حسابي"
+    "profile": "حسابي",
+    "forYou": "اهتماماتك",
+    "categories": "التصنيفات"
   },
   "categories": {
     "cars": "سيارات",
@@ -19,7 +21,19 @@
   },
   "create": {
     "title": "إضافة إعلان جديد",
-    "subtitle": "هنا يمكنك إضافة إعلانك الجديد"
+    "subtitle": "هنا يمكنك إضافة إعلانك الجديد",
+    "uploadPhotos": "تحميل الصور",
+    "photoTip": "اجذب انتباه المشترين — استخدم صورًا ذات جودة.",
+    "learnHow": "تعرف كيف",
+    "titleLabel": "العنوان",
+    "titlePlaceholder": "مثال: سترة بيضاء من COS",
+    "descLabel": "وصف الإعلان",
+    "descPlaceholder": "مثال: استُخدم مرات قليلة فقط، المقاس صحيح",
+    "category": "التصنيف",
+    "price": "السعر",
+    "uploadFeedback": "ما رأيك في عملية رفع الإعلان؟",
+    "giveFeedback": "شاركنا رأيك",
+    "upload": "نشر الإعلان"
   },
   "profile": {
     "title": "حسابي",
@@ -28,4 +42,4 @@
   "explore": {
     "title": "التصنيفات"
   }
-} 
+}
