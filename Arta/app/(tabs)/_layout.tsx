@@ -2,6 +2,7 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -17,6 +18,7 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { t } = useTranslation();
 
   return (
     <Tabs
@@ -29,22 +31,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'الرئيسية',
+          title: t('tabs.home'),
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
         }}
       />
 
@@ -52,8 +40,26 @@ export default function TabLayout() {
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'إكتشف',
-          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
+          title: t('tabs.explore'),
+          tabBarIcon: ({ color }) => <TabBarIcon name="compass" color={color} />,
+        }}
+      />
+
+      {/* Create Listing tab */}
+      <Tabs.Screen
+        name="create"
+        options={{
+          title: t('tabs.create'),
+          tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
+        }}
+      />
+
+      {/* Profile tab */}
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: t('tabs.profile'),
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>

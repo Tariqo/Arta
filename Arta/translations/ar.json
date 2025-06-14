@@ -1,0 +1,31 @@
+{
+  "tabs": {
+    "home": "الرئيسية",
+    "explore": "إكتشف",
+    "create": "إضافة إعلان",
+    "profile": "حسابي"
+  },
+  "categories": {
+    "cars": "سيارات",
+    "electronics": "إلكترونيات",
+    "clothes": "ملابس",
+    "furniture": "أثاث"
+  },
+  "listings": {
+    "timeAgo": "منذ {{time}}",
+    "hours": "ساعات",
+    "postedBy": "نشر بواسطة",
+    "location": "الموقع"
+  },
+  "create": {
+    "title": "إضافة إعلان جديد",
+    "subtitle": "هنا يمكنك إضافة إعلانك الجديد"
+  },
+  "profile": {
+    "title": "حسابي",
+    "subtitle": "إدارة حسابك وإعلاناتك"
+  },
+  "explore": {
+    "title": "التصنيفات"
+  }
+} 

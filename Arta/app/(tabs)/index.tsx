@@ -1,192 +1,214 @@
-import { StyleSheet, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet, SafeAreaView, Image,
+  ScrollView, TouchableOpacity
+} from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 const COLORS = {
-  primary: '#004e64',
-  secondary: '#ff6b6b',
-  background: '#f9f9f9',
-  accent: '#00a896',
-  text: '#222',
-  lightText: '#777',
-  white: '#fff',
+  primary: '#2a9d8f',
+  secondary: '#e76f51',
+  background: '#f1f1f1',
+  accent: '#264653',
+  text: '#1d1d1d',
+  lightText: '#6c757d',
+  white: '#ffffff',
+  redBackground: '#c0392b',
+  redActive: '#e74c3c',
 };
+
+const tabs = ['For Me', 'Categories'];
+const categories = ['سيارات', 'إلكترونيات', 'ملابس', 'أثاث'];
+
+const listings = [
+  {
+    id: 1,
+    title: 'كيا مورنينج 1100 سي سي',
+    time: 'منذ 4 ساعات',
+    user: 'Wesam',
+    location: 'صنعاء',
+    image: 'https://via.placeholder.com/100',
+  },
+  {
+    id: 2,
+    title: 'هايلاندر وارد أمريكا',
+    time: 'منذ 4 ساعات',
+    user: 'Wesam',
+    location: 'صنعاء',
+    image: 'https://via.placeholder.com/100',
+  },
+];
 
 export default function HomeScreen() {
   const router = useRouter();
-
-  const categories = ['سيارات', 'إلكترونيات', 'ملابس', 'أثاث'];
+  const { i18n } = useTranslation();
+  const [activeTab, setActiveTab] = useState('For Me');
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-
-        {/* App Name Bar */}
-        <View style={styles.appTitleBar}>
-          <Text style={styles.appTitle}>عرطة</Text>
-        </View>
-
-        {/* Language and Login */}
-        <View style={styles.languageLoginSection}>
-          <View style={styles.languageToggle}>
-            <Text style={styles.languageButtonActive}>عربي</Text>
-            <Text style={styles.languageButton}>Eng</Text>
-          </View>
-          <Text style={styles.loginText}>دخول</Text>
-          <FontAwesome name="arrow-left" size={16} color="white" />
-        </View>
-
-        {/* Search */}
-        <View style={styles.searchBarContainer}>
-          <TouchableOpacity style={styles.searchIconContainer}>
-            <FontAwesome name="search" size={20} color="white" />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.langSegmentedControl}>
+          <TouchableOpacity
+            style={[
+              styles.langSegmentButton,
+              i18n.language === 'ar' && styles.langSegmentButtonActive,
+            ]}
+            onPress={() => i18n.changeLanguage('ar')}
+          >
+            <Text style={styles.langText}>
+              عربي
+            </Text>
           </TouchableOpacity>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="إبحث عن سلعة......"
-            placeholderTextColor="#888"
-          />
+          <View style={styles.langSegmentDivider} />
+          <TouchableOpacity
+            style={[
+              styles.langSegmentButton,
+              i18n.language === 'en' && styles.langSegmentButtonActive,
+            ]}
+            onPress={() => i18n.changeLanguage('en')}
+          >
+            <Text style={styles.langText}>
+              EN
+            </Text>
+          </TouchableOpacity>
         </View>
+      </View>
+      <View style={styles.topBar}>
+        {tabs.map((tab) => (
+          <TouchableOpacity
+            key={tab}
+            onPress={() => setActiveTab(tab)}
+            style={[
+              styles.tabButton,
+              activeTab === tab && styles.activeTab,
+            ]}
+          >
+            <Text style={[
+              styles.tabText,
+              activeTab === tab && styles.activeTabText,
+            ]}>
+              {tab}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <ScrollView contentContainerStyle={styles.content}>
+        {activeTab === 'For Me' && listings.map((item) => (
+          <ListingCard key={item.id} {...item} />
+        ))}
 
-        {/* Add Ad Button */}
-        <TouchableOpacity style={styles.addAdButton}>
-          <Text style={styles.addAdButtonText}>أضف إعلانك +</Text>
-        </TouchableOpacity>
-
-        {/* Categories */}
-        <View style={styles.categoriesContainer}>
-          {categories.map((cat) => (
-            <TouchableOpacity
-              key={cat}
-              style={styles.categoryButton}
-              onPress={() => router.push(`/explore?category=${encodeURIComponent(cat)}`)}
-            >
-              <Text style={styles.categoryText}>{cat}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Listings */}
-        <View style={styles.listingsContainer}>
-          <Text style={styles.listingsTitle}>أحدث الإعلانات</Text>
-
-          <View style={styles.listingItem}>
-            <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.listingImage} />
-            <View style={styles.listingDetails}>
-              <Text style={styles.listingTitle}>كيا مورنينج 1100 سي سي</Text>
-              <Text style={styles.listingInfo}>منذ 4 ساعات</Text>
-              <Text style={styles.listingInfo}>Wesam</Text>
-              <Text style={styles.listingLocation}>صنعاء</Text>
-            </View>
+        {activeTab === 'Categories' && (
+          <View style={styles.categories}>
+            {categories.map((cat) => (
+              <CategoryButton 
+                key={cat} 
+                label={cat} 
+                onPress={() => router.push(`/explore?category=${encodeURIComponent(cat)}`)} 
+              />
+            ))}
           </View>
-
-          <View style={styles.listingItem}>
-            <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.listingImage} />
-            <View style={styles.listingDetails}>
-              <Text style={styles.listingTitle}>هايلاندر وارد أمريكا</Text>
-              <Text style={styles.listingInfo}>منذ 4 ساعات</Text>
-              <Text style={styles.listingInfo}>Wesam</Text>
-              <Text style={styles.listingLocation}>صنعاء</Text>
-            </View>
-          </View>
-        </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
 }
 
+function CategoryButton({ label, onPress }: { label: string; onPress: () => void }) {
+  return (
+    <TouchableOpacity style={styles.categoryBtn} onPress={onPress}>
+      <Text style={styles.categoryText}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
+
+function ListingCard({ title, time, user, location, image }: any) {
+  return (
+    <View style={styles.card}>
+      <Image source={{ uri: image }} style={styles.cardImage} />
+      <View style={styles.cardDetails}>
+        <Text style={styles.cardTitle}>{title}</Text>
+        <Text style={styles.cardMeta}>{time}</Text>
+        <Text style={styles.cardMeta}>{user}</Text>
+        <Text style={styles.cardLocation}>{location}</Text>
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
     backgroundColor: COLORS.background,
   },
-  appTitleBar: {
-    backgroundColor: COLORS.primary,
-    paddingVertical: 15,
-    alignItems: 'center',
-  },
-  appTitle: {
-    color: COLORS.white,
-    fontSize: 26,
-    fontWeight: 'bold',
-  },
-  languageLoginSection: {
-    backgroundColor: COLORS.primary,
+  header: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingHorizontal: 15,
-    paddingBottom: 10,
-  },
-  languageToggle: {
-    flexDirection: 'row',
-    backgroundColor: '#003c50',
-    borderRadius: 5,
-    overflow: 'hidden',
-    marginRight: 10,
-  },
-  languageButton: {
-    color: 'white',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-  },
-  languageButtonActive: {
-    backgroundColor: COLORS.secondary,
-    color: 'white',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-  },
-  loginText: {
-    color: 'white',
-    marginRight: 5,
-    fontSize: 16,
-  },
-  searchBarContainer: {
-    flexDirection: 'row',
+    padding: 15,
     backgroundColor: COLORS.white,
-    borderRadius: 5,
-    marginHorizontal: 15,
-    marginTop: 10,
-    alignItems: 'center',
-    elevation: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
-  searchIconContainer: {
+  langSegmentedControl: {
+    flexDirection: 'row',
+    backgroundColor: COLORS.accent,
+    borderRadius: 15,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+  },
+  langSegmentButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  langSegmentButtonActive: {
     backgroundColor: COLORS.primary,
-    padding: 10,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
   },
-  searchInput: {
-    flex: 1,
-    padding: 10,
-    fontSize: 16,
-    textAlign: 'right',
+  langSegmentDivider: {
+    width: 1,
+    backgroundColor: COLORS.primary,
   },
-  addAdButton: {
-    backgroundColor: COLORS.secondary,
-    borderRadius: 5,
-    marginHorizontal: 15,
-    marginTop: 10,
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  addAdButtonText: {
+  langText: {
     color: COLORS.white,
-    fontSize: 16,
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: COLORS.white,
+    paddingVertical: 10,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+  },
+  tabButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+  activeTab: {
+    backgroundColor: COLORS.primary,
+  },
+  tabText: {
+    color: COLORS.text,
     fontWeight: 'bold',
   },
-  categoriesContainer: {
+  activeTabText: {
+    color: COLORS.white,
+  },
+  content: {
+    padding: 15,
+  },
+  categories: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    padding: 10,
-    backgroundColor: COLORS.white,
-    borderRadius: 10,
-    margin: 10,
-    elevation: 3,
+    marginTop: 10,
   },
-  categoryButton: {
+  categoryBtn: {
     backgroundColor: COLORS.accent,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -196,48 +218,36 @@ const styles = StyleSheet.create({
   categoryText: {
     color: COLORS.white,
     fontWeight: 'bold',
-    fontSize: 14,
   },
-  listingsContainer: {
-    backgroundColor: COLORS.white,
-    marginHorizontal: 15,
-    marginTop: 10,
-    borderRadius: 5,
-    padding: 15,
-  },
-  listingsTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  listingItem: {
+  card: {
     flexDirection: 'row',
+    backgroundColor: COLORS.white,
     marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingBottom: 10,
+    padding: 10,
+    borderRadius: 10,
+    elevation: 2,
   },
-  listingImage: {
+  cardImage: {
     width: 100,
     height: 100,
-    borderRadius: 5,
+    borderRadius: 10,
     marginRight: 10,
   },
-  listingDetails: {
+  cardDetails: {
     flex: 1,
   },
-  listingTitle: {
+  cardTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
   },
-  listingInfo: {
-    fontSize: 14,
+  cardMeta: {
     color: COLORS.lightText,
+    fontSize: 14,
   },
-  listingLocation: {
-    fontSize: 14,
-    color: COLORS.lightText,
+  cardLocation: {
     marginTop: 5,
+    color: COLORS.primary,
+    fontWeight: 'bold',
   },
 });

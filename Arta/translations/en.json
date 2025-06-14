@@ -1,0 +1,31 @@
+{
+  "tabs": {
+    "home": "Home",
+    "explore": "Explore",
+    "create": "Add Listing",
+    "profile": "Profile"
+  },
+  "categories": {
+    "cars": "Cars",
+    "electronics": "Electronics",
+    "clothes": "Clothes",
+    "furniture": "Furniture"
+  },
+  "listings": {
+    "timeAgo": "{{time}} ago",
+    "hours": "hours",
+    "postedBy": "Posted by",
+    "location": "Location"
+  },
+  "create": {
+    "title": "Add New Listing",
+    "subtitle": "Add your new listing here"
+  },
+  "profile": {
+    "title": "My Account",
+    "subtitle": "Manage your account and listings"
+  },
+  "explore": {
+    "title": "Categories"
+  }
+} 
